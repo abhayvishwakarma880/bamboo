@@ -6,13 +6,13 @@ export const companyContact = {
   website: 'bamboogrovespvtltd.com',
   websiteUrl: 'https://bamboogrovespvtltd.com',
   addressLines: [
-    'A-Block, 122, 1st Floor,',
-    'Flat No - 303 Sun Shine Apartment,',
-    '34 Ravindra Garden, Sector E, Aliganj,',
+    'Allure Enclave 3rd floor,',
+    // 'Flat No - 303 Sun Shine Apartment,',
+    'Sector G, Aliganj,',
     'Lucknow, Uttar Pradesh 226024',
   ] as const,
   addressMultiline:
-    'A-Block, 122, 1st Floor,\nFlat No - 303 Sun Shine Apartment,\n34 Ravindra Garden, Sector E, Aliganj,\nLucknow, Uttar Pradesh 226024',
+    'Allure Enclave 3rd floor, Sector G, Aliganj, Lucknow-226024',
   addressInline:
-    'A-Block, 122, 1st Floor, Flat No - 303 Sun Shine Apartment, 34 Ravindra Garden, Sector E, Aliganj, Lucknow, Uttar Pradesh 226024',
+    'Allure Enclave 3rd floor, Sector G, Aliganj, Lucknow-226024',
 } as const;
