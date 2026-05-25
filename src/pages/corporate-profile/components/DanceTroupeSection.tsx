@@ -6,7 +6,7 @@ const troupeData = [
   { id: 2, title: 'Dance Smith', image: 'https://fitness-family.ru/wp-content/uploads/2025/07/dance-mix-min-1-1024x1024.png', url: 'https://drive.google.com/drive/folders/1HTDlFW7CGc3TkwyuqO2yOKfqFbN1Lj5r?usp=drive_link' },
   { id: 3, title: 'Expression Dance Troupe', image: 'https://www.nolsom.com/wp-content/uploads/elementor/thumbs/031-SEGIB-artes-escenicas-audiovisual-Nolsom-8-r5i5ejzerd20s117ymjrbmuef0jswzx6v6ri7up6io.jpg', url: 'https://drive.google.com/drive/folders/1iCsWPGqFk3BKU-bL2xiioIb9Zh0WiPaa?usp=drive_link' },
   { id: 4, title: 'Monu Dance Troupe', image: 'https://www.theaterhaus.com/media/filer_public_thumbnails/filer_public/15/b0/15b0537f-d34c-4fef-9c4c-07b6dfa45df9/amala-dianor_dub_pierre-gondard-2_6.jpg__732x732_q85_crop_subject_location-1500%2C829_subsampling-2_upscale.jpg', url: 'https://drive.google.com/drive/folders/1qc976kG0dXE-CxmvjqiPfWTZW63MUwPq?usp=drive_link' },
-  { id: 5, title: 'Oorja Dance Troupe', image: 'https://yt3.googleusercontent.com/ytc/AIdro_nmdYnyT4w5i6aSZSf--J8uUSH0VjZIVIdHqHUxGucT2xc=s900-c-k-c0x00ffffff-no-rj', url: 'https://drive.google.com/drive/folders/1boGXgQ-zSpW3qrnd2tvDpR82kuprp1d6?usp=drive_link' },
+  { id: 5, title: 'Oorja Dance Troupe', image: 'https://4dancing.ru/files/u5304/dance1.jpgj', url: 'https://drive.google.com/drive/folders/1boGXgQ-zSpW3qrnd2tvDpR82kuprp1d6?usp=drive_link' },
   { id: 6, title: 'Russian Artists', image: runssianDance, url: 'https://drive.google.com/drive/folders/19BGhMdhCXRaT2IjlbgLBtfdigX6yuRpG' },
 ];
 
