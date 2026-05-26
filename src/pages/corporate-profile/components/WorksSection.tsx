@@ -49,6 +49,7 @@ interface EventCardProps {
 }
 
 const EventCard: React.FC<EventCardProps> = ({ event, resolvedPortfolioId }) => {
+  console.log('EventCard received event data:', event);
   const [imageStart, setImageStart] = React.useState(0);
   const images = event.images ?? [];
   const maxImageStart = Math.max(0, images.length - IMAGES_VISIBLE);
@@ -168,6 +169,7 @@ const WorksSection: React.FC = () => {
         const res = await fetch(`${BASE_URL}/portfolio/${resolvedPortfolioId}`);
         if (!res.ok) throw new Error(`Server error: ${res.status}`);
         const json = await res.json();
+        console.log('API Response for portfolio:', resolvedPortfolioId, json);
         if (json.success) {
           setEvents(json.data.events);
         } else {
@@ -183,10 +185,26 @@ const WorksSection: React.FC = () => {
   }, [resolvedPortfolioId]);
 
   const sortedEvents = React.useMemo(() => {
-    return [...events].sort((a, b) => {
+    const sorted = [...events].sort((a, b) => {
       const diff = getEventSortTimestamp(b) - getEventSortTimestamp(a);
       return diff !== 0 ? diff : b.id - a.id;
     });
+
+    const seenClients = new Set<string>();
+    const uniqueEvents: PortfolioEvent[] = [];
+    for (const event of sorted) {
+      const client = event.clientName?.trim().toLowerCase();
+      if (client) {
+        if (!seenClients.has(client)) {
+          seenClients.add(client);
+          uniqueEvents.push(event);
+        }
+      } else {
+        // Agar clientName blank/null hai toh use list me rehne denge
+        uniqueEvents.push(event);
+      }
+    }
+    return uniqueEvents;
   }, [events]);
 
   return (
