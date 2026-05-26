@@ -1,13 +1,48 @@
-import React, { useEffect, useRef, useState } from 'react';
-import runssianDance from '../../../assets/russianDance.jpeg'
+import React, { useEffect, useRef, useState } from "react";
+import runssianDance from "../../../assets/russianDance.jpeg";
+import oorjaDance from "../../../assets/oorjaDance.png";
 
 const troupeData = [
-  { id: 1, title: 'Aasma Dance', image: 'https://i.pinimg.com/736x/c4/d3/df/c4d3df6c5c75713dfb1f733340ae0cc6.jpg', url: 'https://drive.google.com/drive/folders/1O-hm0LPccS5cKtgAIjjuU1XLToCAPZOk?usp=drive_link' },
-  { id: 2, title: 'Dance Smith', image: 'https://fitness-family.ru/wp-content/uploads/2025/07/dance-mix-min-1-1024x1024.png', url: 'https://drive.google.com/drive/folders/1HTDlFW7CGc3TkwyuqO2yOKfqFbN1Lj5r?usp=drive_link' },
-  { id: 3, title: 'Expression Dance Troupe', image: 'https://www.nolsom.com/wp-content/uploads/elementor/thumbs/031-SEGIB-artes-escenicas-audiovisual-Nolsom-8-r5i5ejzerd20s117ymjrbmuef0jswzx6v6ri7up6io.jpg', url: 'https://drive.google.com/drive/folders/1iCsWPGqFk3BKU-bL2xiioIb9Zh0WiPaa?usp=drive_link' },
-  { id: 4, title: 'Monu Dance Troupe', image: 'https://www.theaterhaus.com/media/filer_public_thumbnails/filer_public/15/b0/15b0537f-d34c-4fef-9c4c-07b6dfa45df9/amala-dianor_dub_pierre-gondard-2_6.jpg__732x732_q85_crop_subject_location-1500%2C829_subsampling-2_upscale.jpg', url: 'https://drive.google.com/drive/folders/1qc976kG0dXE-CxmvjqiPfWTZW63MUwPq?usp=drive_link' },
-  { id: 5, title: 'Oorja Dance Troupe', image: 'https://4dancing.ru/files/u5304/dance1.jpgj', url: 'https://drive.google.com/drive/folders/1boGXgQ-zSpW3qrnd2tvDpR82kuprp1d6?usp=drive_link' },
-  { id: 6, title: 'Russian Artists', image: runssianDance, url: 'https://drive.google.com/drive/folders/19BGhMdhCXRaT2IjlbgLBtfdigX6yuRpG' },
+  {
+    id: 1,
+    title: "Aasma Dance",
+    image:
+      "https://i.pinimg.com/736x/c4/d3/df/c4d3df6c5c75713dfb1f733340ae0cc6.jpg",
+    url: "https://drive.google.com/drive/folders/1O-hm0LPccS5cKtgAIjjuU1XLToCAPZOk?usp=drive_link",
+  },
+  {
+    id: 2,
+    title: "Dance Smith",
+    image:
+      "https://fitness-family.ru/wp-content/uploads/2025/07/dance-mix-min-1-1024x1024.png",
+    url: "https://drive.google.com/drive/folders/1HTDlFW7CGc3TkwyuqO2yOKfqFbN1Lj5r?usp=drive_link",
+  },
+  {
+    id: 3,
+    title: "Expression Dance Troupe",
+    image:
+      "https://www.nolsom.com/wp-content/uploads/elementor/thumbs/031-SEGIB-artes-escenicas-audiovisual-Nolsom-8-r5i5ejzerd20s117ymjrbmuef0jswzx6v6ri7up6io.jpg",
+    url: "https://drive.google.com/drive/folders/1iCsWPGqFk3BKU-bL2xiioIb9Zh0WiPaa?usp=drive_link",
+  },
+  {
+    id: 4,
+    title: "Monu Dance Troupe",
+    image:
+      "https://www.theaterhaus.com/media/filer_public_thumbnails/filer_public/15/b0/15b0537f-d34c-4fef-9c4c-07b6dfa45df9/amala-dianor_dub_pierre-gondard-2_6.jpg__732x732_q85_crop_subject_location-1500%2C829_subsampling-2_upscale.jpg",
+    url: "https://drive.google.com/drive/folders/1qc976kG0dXE-CxmvjqiPfWTZW63MUwPq?usp=drive_link",
+  },
+  {
+    id: 5,
+    title: "Oorja Dance Troupe",
+    image: oorjaDance,
+    url: "https://drive.google.com/drive/folders/1boGXgQ-zSpW3qrnd2tvDpR82kuprp1d6?usp=drive_link",
+  },
+  {
+    id: 6,
+    title: "Russian Artists",
+    image: runssianDance,
+    url: "https://drive.google.com/drive/folders/19BGhMdhCXRaT2IjlbgLBtfdigX6yuRpG",
+  },
 ];
 
 const DanceTroupeSection: React.FC = () => {
@@ -16,15 +51,20 @@ const DanceTroupeSection: React.FC = () => {
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
-      { threshold: 0.1 }
+      ([entry]) => {
+        if (entry.isIntersecting) setVisible(true);
+      },
+      { threshold: 0.1 },
     );
     if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative bg-[#0a0a0a] overflow-hidden py-20 lg:py-24">
+    <section
+      ref={sectionRef}
+      className="relative bg-[#0a0a0a] overflow-hidden py-20 lg:py-24"
+    >
       {/* Ambient glows */}
       <div className="absolute inset-0 pointer-events-none z-0">
         <div className="absolute top-0 right-0 w-1/2 h-3/5 bg-[radial-gradient(circle_at_top_right,rgba(136,171,50,0.07)_0%,transparent_65%)]" />
@@ -33,10 +73,14 @@ const DanceTroupeSection: React.FC = () => {
 
       <div className="relative z-10 max-w-6xl mx-auto px-5 sm:px-10">
         {/* Header */}
-        <div className={`mb-14 text-center transition-all duration-700 ease-out ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+        <div
+          className={`mb-14 text-center transition-all duration-700 ease-out ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+        >
           <div className="flex items-center justify-center gap-3 mb-4">
             <div className="w-8 h-px bg-[#88ab32]" />
-            <span className="text-[11px] tracking-[0.2em] text-[#88ab32] uppercase font-medium">Performance</span>
+            <span className="text-[11px] tracking-[0.2em] text-[#88ab32] uppercase font-medium">
+              Performance
+            </span>
             <div className="w-8 h-px bg-[#88ab32]" />
           </div>
           <h2 className="text-[clamp(28px,4vw,48px)] font-light text-[#f5f5f5] leading-[1.15] tracking-[-0.02em]">
@@ -45,14 +89,16 @@ const DanceTroupeSection: React.FC = () => {
         </div>
 
         {/* Grid */}
-        <div className={`grid grid-cols-2 sm:grid-cols-3 gap-5 transition-all duration-700 delay-200 ease-out ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+        <div
+          className={`grid grid-cols-2 sm:grid-cols-3 gap-5 transition-all duration-700 delay-200 ease-out ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+        >
           {troupeData.map((troupe, i) => (
             <a
               key={troupe.id}
               href={troupe.url}
               target="_blank"
               rel="noopener noreferrer"
-              className={`relative overflow-hidden rounded-2xl border border-white/[0.08] shadow-[0_4px_24px_rgba(0,0,0,0.4)] group transition-all duration-500 hover:border-[#88ab32]/35 hover:shadow-[0_20px_60px_rgba(136,171,50,0.12)] ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
+              className={`relative overflow-hidden rounded-2xl border border-white/[0.08] shadow-[0_4px_24px_rgba(0,0,0,0.4)] group transition-all duration-500 hover:border-[#88ab32]/35 hover:shadow-[0_20px_60px_rgba(136,171,50,0.12)] ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
               style={{ transitionDelay: `${0.07 * Math.min(i, 5)}s` }}
             >
               {/* Full image — covers entire card including title area */}
@@ -64,7 +110,7 @@ const DanceTroupeSection: React.FC = () => {
               />
 
               {/* Spacer for image area */}
-              <div style={{ height: '240px' }} />
+              <div style={{ height: "240px" }} />
 
               {/* Title area — blurred image behind, semi-transparent overlay */}
               <div className="relative px-4 py-3">
@@ -77,7 +123,7 @@ const DanceTroupeSection: React.FC = () => {
                     src={troupe.image}
                     alt=""
                     className="absolute inset-0 w-full h-full object-cover scale-110"
-                    style={{ filter: 'blur(12px)', transform: 'scale(1.2)' }}
+                    style={{ filter: "blur(12px)", transform: "scale(1.2)" }}
                   />
                   <div className="absolute inset-0 bg-black/40" />
                 </div>
