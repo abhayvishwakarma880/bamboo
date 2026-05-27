@@ -161,21 +161,21 @@ const EventCard: React.FC<{
       )}
 
       {/* Gradient overlay */}
-      <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent" />
 
-      {/* Badge */}
+      {/* Badge with glassmorphism blur */}
       <div className="absolute right-3 top-3">
-        <span className="rounded-full border border-accent/40 bg-accent/15 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#d6e8a1]">
+        <span className="rounded-full border border-accent/30 bg-black/45 backdrop-blur-md px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#638303]">
           {event.images.length} photos
         </span>
       </div>
 
       {/* Info */}
       <div className="absolute bottom-0 left-0 right-0 p-4">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-accent">
+        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">
           {event.eventType}
         </p>
-        <h3 className="mt-1 text-base font-semibold leading-snug text-white">
+        <h3 className="mt-1 text-xs font-semibold leading-snug text-white">
           {event.title}
         </h3>
         {event.location && (
@@ -219,15 +219,15 @@ const ClientCard: React.FC<{
         </div>
       )}
 
-      {/* Gradient */}
-      <div className="absolute inset-0 bg-linear-to-t from-black/85 via-black/25 to-transparent" />
+      {/* Gradient overlay from bottom to make text highly readable */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-transparent" />
 
-      {/* Stats badges */}
+      {/* Stats badges with glassmorphism blur */}
       <div className="absolute right-3 top-3 flex flex-col gap-1.5 items-end">
-        <span className="rounded-full border border-white/20 bg-black/50 px-2.5 py-0.5 text-[10px] font-medium text-white/70">
+        <span className="rounded-full border border-white/10 bg-black/40 backdrop-blur-md px-2.5 py-0.5 text-[10px] font-medium text-white/80">
           {events.length} {events.length === 1 ? "event" : "events"}
         </span>
-        <span className="rounded-full border border-accent/40 bg-accent/15 px-2.5 py-0.5 text-[10px] font-semibold text-[#d6e8a1]">
+        <span className="rounded-full border border-accent/30 bg-accent/10 backdrop-blur-md px-2.5 py-0.5 text-[10px] font-semibold text-[#d6e8a1]">
           {totalPhotos} photos
         </span>
       </div>
@@ -235,7 +235,7 @@ const ClientCard: React.FC<{
       {/* Client name */}
       <div className="absolute bottom-0 left-0 right-0 p-4">
         <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-accent">Client</p>
-        <h3 className="mt-1 text-lg font-bold uppercase tracking-[0.06em] text-white">
+        <h3 className="mt-1 text-xs font-bold uppercase tracking-[0.06em] text-white">
           {clientName}
         </h3>
       </div>
@@ -282,6 +282,17 @@ const CorporateEventPage: React.FC = () => {
         const json = await res.json();
         if (json.success) {
           setEvents(json.data.events);
+          
+          // Auto-select client if 'client' param is present in URL
+          const clientParam = searchParams.get("client")?.trim();
+          if (clientParam) {
+            const match = json.data.events.find(
+              (e: any) => e.clientName?.trim().toLowerCase() === clientParam.toLowerCase()
+            );
+            if (match) {
+              setSelectedClient(match.clientName.trim());
+            }
+          }
         } else {
           setEventsError("Data load nahi hua.");
         }

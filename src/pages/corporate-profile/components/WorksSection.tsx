@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useParams, useSearchParams } from 'react-router-dom';
+import { Link, useParams, useSearchParams, useNavigate } from 'react-router-dom';
 import RevealSection from './RevealSection';
 import SectionHeading from './SectionHeading';
 import { getDefaultPortfolioIdForEventType } from '../../../lib/eventRoute';
@@ -50,16 +50,34 @@ interface EventCardProps {
 
 const EventCard: React.FC<EventCardProps> = ({ event, resolvedPortfolioId }) => {
   console.log('EventCard received event data:', event);
+  const navigate = useNavigate();
   const [imageStart, setImageStart] = React.useState(0);
   const images = event.images ?? [];
   const maxImageStart = Math.max(0, images.length - IMAGES_VISIBLE);
   const visibleImages = images.slice(imageStart, imageStart + IMAGES_VISIBLE);
 
-  const handleImagePrev = () => setImageStart((s) => Math.max(0, s - 1));
-  const handleImageNext = () => setImageStart((s) => Math.min(maxImageStart, s + 1));
+  const handleImagePrev = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setImageStart((s) => Math.max(0, s - 1));
+  };
+  const handleImageNext = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setImageStart((s) => Math.min(maxImageStart, s + 1));
+  };
+
+  const handleCardClick = (e: React.MouseEvent) => {
+    const target = e.target as HTMLElement;
+    if (target.closest('button')) {
+      return;
+    }
+    navigate(`/corporate-events?portfolioId=${resolvedPortfolioId}&client=${encodeURIComponent(event.clientName || '')}`);
+  };
 
   return (
-    <div className="overflow-hidden rounded-4xl border border-accent/25 bg-[#080c06]/95 p-5 shadow-[0_12px_50px_rgba(0,0,0,0.42)] md:p-7">
+    <div 
+      onClick={handleCardClick}
+      className="cursor-pointer overflow-hidden rounded-4xl border border-accent/25 bg-[#080c06]/95 p-5 shadow-[0_12px_50px_rgba(0,0,0,0.42)] md:p-7 transition-all duration-300 hover:scale-[1.015] hover:border-accent"
+    >
       <div className="flex items-start justify-between gap-4">
         <div>
           <h3 className="text-2xl font-semibold tracking-tight text-white sm:text-[2rem]">{event.title}</h3>
@@ -129,7 +147,10 @@ const EventCard: React.FC<EventCardProps> = ({ event, resolvedPortfolioId }) => 
               <button
                 key={i}
                 type="button"
-                onClick={() => setImageStart(i)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setImageStart(i);
+                }}
                 aria-label={`Go to images set ${i + 1} for ${event.title}`}
                 className={`h-1.5 rounded-full transition-all ${
                   i === imageStart ? 'w-5 bg-accent' : 'w-1.5 bg-white/45 hover:bg-white/75'
