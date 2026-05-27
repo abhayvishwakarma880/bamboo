@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import { createPortal } from "react-dom";
 import { Building2, Images, MapPin, ArrowLeft, X, ChevronLeft, ChevronRight } from "lucide-react";
 import { useSearchParams } from "react-router-dom";
-import { getDefaultPortfolioIdForEventType } from "../lib/eventRoute";
+import { getDefaultPortfolioIdForEventType, resolvePortfolioId } from "../lib/eventRoute";
 
 const IMAGE_BASE_URL = "https://bg.codecrafter.co.in";
 const PORTFOLIO_API_URL = import.meta.env.VITE_BACKEND_URL;
@@ -271,11 +271,8 @@ const CorporateEventPage: React.FC = () => {
 
   useEffect(() => {
     const requestedPortfolioId = searchParams.get("portfolioId")?.trim();
-    const parsedPortfolioId = requestedPortfolioId ? Number(requestedPortfolioId) : Number.NaN;
-    const portfolioId =
-      Number.isInteger(parsedPortfolioId) && parsedPortfolioId > 0
-        ? String(parsedPortfolioId)
-        : String(getDefaultPortfolioIdForEventType("corporate"));
+    const resolvedId = resolvePortfolioId(requestedPortfolioId) ?? getDefaultPortfolioIdForEventType("corporate");
+    const portfolioId = String(resolvedId);
 
     const fetchEvents = async () => {
       try {

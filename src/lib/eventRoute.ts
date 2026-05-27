@@ -5,15 +5,38 @@ const DEFAULT_PORTFOLIO_ID_BY_EVENT_TYPE: Record<EventType, number> = {
   social: 30,
 };
 
+const SLUG_TO_ID: Record<string, number> = {
+  'bamboo-corporate': 27,
+  'bamboo-social': 30,
+};
+
+const ID_TO_SLUG: Record<number, string> = {
+  27: 'bamboo-corporate',
+  30: 'bamboo-social',
+};
+
+// Helper to convert any path value (slug or ID) to a resolved portfolioId number
+export const resolvePortfolioId = (value: string | null | undefined): number | undefined => {
+  if (!value) return undefined;
+  const trimmed = value.trim();
+  
+  if (trimmed in SLUG_TO_ID) {
+    return SLUG_TO_ID[trimmed];
+  }
+  
+  const parsed = Number(trimmed);
+  return Number.isInteger(parsed) && parsed > 0 ? parsed : undefined;
+};
+
+// Helper to convert a portfolioId number to its path value slug or string
+export const getPortfolioPathValue = (portfolioId: number): string => {
+  return ID_TO_SLUG[portfolioId] ?? String(portfolioId);
+};
+
 const getStorageKeyForEventType = (eventType: EventType) => `bg.portfolio.${eventType}`;
 
 const parsePortfolioId = (rawValue: string | null | undefined) => {
-  if (!rawValue) {
-    return undefined;
-  }
-
-  const parsedValue = Number(rawValue.trim());
-  return Number.isInteger(parsedValue) && parsedValue > 0 ? parsedValue : undefined;
+  return resolvePortfolioId(rawValue);
 };
 
 const getPortfolioIdFromCurrentUrl = () => {
@@ -46,7 +69,8 @@ export const rememberPortfolioIdForEventType = (eventType: EventType, portfolioI
 };
 
 export const getPostVerificationRoute = (portfolioId: number, eventType: EventType = 'corporate') => {
-  return eventType === 'social' ? `/social-profile/${portfolioId}` : `/corporate-profile/${portfolioId}`;
+  const pathValue = getPortfolioPathValue(portfolioId);
+  return eventType === 'social' ? `/social-profile/${pathValue}` : `/corporate-profile/${pathValue}`;
 };
 
 export const getDefaultPortfolioIdForEventType = (eventType: EventType): number => {

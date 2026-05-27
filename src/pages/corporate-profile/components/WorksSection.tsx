@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useParams, useSearchParams, useNavigate, useLocation } from 'react-router-dom';
 import RevealSection from './RevealSection';
 import SectionHeading from './SectionHeading';
-import { getDefaultPortfolioIdForEventType } from '../../../lib/eventRoute';
+import { getDefaultPortfolioIdForEventType, resolvePortfolioId, getPortfolioPathValue } from '../../../lib/eventRoute';
 
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 const IMAGE_BASE_URL = 'https://bg.codecrafter.co.in';
@@ -70,7 +70,7 @@ const EventCard: React.FC<EventCardProps> = ({ event, resolvedPortfolioId }) => 
     if (target.closest('button')) {
       return;
     }
-    navigate(`/corporate-events?portfolioId=${resolvedPortfolioId}&client=${encodeURIComponent(event.clientName || '')}`);
+    navigate(`/corporate-events?portfolioId=${getPortfolioPathValue(resolvedPortfolioId)}&client=${encodeURIComponent(event.clientName || '')}`);
   };
 
   return (
@@ -187,11 +187,11 @@ const WorksSection: React.FC = () => {
 
   const requestedPortfolioIdFromPath = portfolioIdParam?.trim();
   const requestedPortfolioId = searchParams.get('portfolioId')?.trim();
-  const parsedPortfolioId = Number(requestedPortfolioIdFromPath ?? requestedPortfolioId ?? Number.NaN);
+  const parsedPortfolioId = resolvePortfolioId(requestedPortfolioIdFromPath ?? requestedPortfolioId);
   
   const isSocialRoute = location.pathname.includes('/social-profile');
   const resolvedPortfolioId =
-    Number.isInteger(parsedPortfolioId) && parsedPortfolioId > 0
+    parsedPortfolioId !== undefined
       ? parsedPortfolioId
       : getDefaultPortfolioIdForEventType(isSocialRoute ? 'social' : 'corporate');
 
@@ -287,7 +287,7 @@ const WorksSection: React.FC = () => {
         {/* View All */}
         <div className="mt-10 flex justify-center">
           <Link
-            to={`/corporate-events?portfolioId=${resolvedPortfolioId}`}
+            to={`/corporate-events?portfolioId=${getPortfolioPathValue(resolvedPortfolioId)}`}
             className="inline-flex items-center justify-center rounded-full border border-accent bg-accent px-6 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-background transition duration-300 hover:-translate-y-0.5 hover:bg-[#9cc340]"
           >
             View All Events

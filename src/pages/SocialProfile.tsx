@@ -6,6 +6,7 @@ import AboutSection from './social-profile/components/AboutSection';
 import WhatWeDoSection from './social-profile/components/WhatWeDoSection';
 import HowWeDoSection from './social-profile/components/HowWeDoSection';
 import ServicesSection from './social-profile/components/ServicesSection';
+import { resolvePortfolioId } from '../lib/eventRoute';
 import {
   ArrowUpRight,
   CalendarCheck,
@@ -84,7 +85,7 @@ const quickStats = [
 
 const SocialProfile: React.FC = () => {
   const { portfolioId } = useParams<{ portfolioId: string }>();
-  const resolvedPortfolioId = portfolioId ? Number(portfolioId) : 30;
+  const resolvedPortfolioId = resolvePortfolioId(portfolioId) ?? 30;
 
   return (
     <main className="relative z-10 overflow-hidden bg-[#0a0a0a] text-[#f5f5f5]">
