@@ -81,7 +81,7 @@ const HowWeDoSection: React.FC = () => {
                 </span>
               </div>
               <h2 className="normal-case text-3xl font-bold leading-tight tracking-[0.03em] text-[#f5f5f5] sm:text-4xl">
-                How We Crate Magic
+                How We Do It
               </h2>
               <div className="mx-auto mt-4 h-0.5 w-24 bg-accent" />
               <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-white/55">
