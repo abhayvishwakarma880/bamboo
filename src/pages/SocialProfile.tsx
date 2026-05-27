@@ -1,5 +1,11 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
 import { motion } from 'motion/react';
+import HeroSection from './social-profile/components/HeroSection';
+import AboutSection from './social-profile/components/AboutSection';
+import WhatWeDoSection from './social-profile/components/WhatWeDoSection';
+import HowWeDoSection from './social-profile/components/HowWeDoSection';
+import ServicesSection from './social-profile/components/ServicesSection';
 import {
   ArrowUpRight,
   CalendarCheck,
@@ -12,6 +18,10 @@ import {
   Music,
   Youtube,
 } from 'lucide-react';
+import PerformanceCategoriesSection from './corporate-profile/components/PerformanceCategoriesSection';
+import DanceTroupeSection from './corporate-profile/components/DanceTroupeSection';
+import ClienteleSection from './corporate-profile/components/ClienteleSection';
+import WorksSection from './corporate-profile/components/WorksSection';
 
 const socialLinks = [
   {
@@ -73,8 +83,22 @@ const quickStats = [
 ];
 
 const SocialProfile: React.FC = () => {
+  const { portfolioId } = useParams<{ portfolioId: string }>();
+  const resolvedPortfolioId = portfolioId ? Number(portfolioId) : 30;
+
   return (
-    <main className="relative min-h-screen overflow-hidden bg-background pt-32 pb-16 sm:pt-36">
+    <main className="relative z-10 overflow-hidden bg-[#0a0a0a] text-[#f5f5f5]">
+      <HeroSection />
+      <AboutSection />
+      <WhatWeDoSection portfolioId={resolvedPortfolioId} />
+      <HowWeDoSection />
+      <ServicesSection />
+      <PerformanceCategoriesSection />
+      <DanceTroupeSection />
+      <ClienteleSection />
+      <WorksSection />
+
+      {/* 
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute -top-24 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-accent/20 blur-3xl" />
         <div className="absolute bottom-6 left-[-5%] h-56 w-56 rounded-full bg-emerald-500/15 blur-3xl" />
@@ -224,6 +248,7 @@ const SocialProfile: React.FC = () => {
           </div>
         </motion.div>
       </section>
+      */}
     </main>
   );
 };

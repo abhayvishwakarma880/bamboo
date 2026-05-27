@@ -144,7 +144,7 @@ const EventCard: React.FC<{
       type="button"
       onClick={() => event.images.length > 0 && onOpen(event.images, event.title)}
       className="group relative overflow-hidden rounded-[20px] border border-white/10 bg-[#0d1209] text-left transition-transform duration-200 hover:scale-[1.02] focus:outline-none"
-      style={{ aspectRatio: "4/3" }}
+      style={{ aspectRatio: "1/1" }}
     >
       {/* Cover image */}
       {cover ? (
@@ -161,29 +161,33 @@ const EventCard: React.FC<{
       )}
 
       {/* Gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/45 to-transparent" />
 
-      {/* Badge with glassmorphism blur */}
-      <div className="absolute right-3 top-3">
-        <span className="rounded-full border border-accent/30 bg-black/45 backdrop-blur-md px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#638303]">
+      {/* Location Badge (Top-Left) */}
+      {event.location && (
+        <div className="absolute left-3 top-3 z-10">
+          <span className="flex items-center gap-1.5 rounded-full border border-white/10 bg-black/55 backdrop-blur-md px-2.5 py-1 text-[10px] font-medium text-white/90">
+            <MapPin className="h-3 w-3 text-accent shrink-0" />
+            {event.location}
+          </span>
+        </div>
+      )}
+
+      {/* Photo count Badge (Top-Right) */}
+      <div className="absolute right-3 top-3 z-10">
+        <span className="rounded-full border border-accent/30 bg-black/55 backdrop-blur-md px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#638303]">
           {event.images.length} photos
         </span>
       </div>
 
-      {/* Info */}
-      <div className="absolute bottom-0 left-0 right-0 p-4">
-        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">
+      {/* Info with solid black glassmorphism overlay */}
+      <div className="absolute bottom-0 left-0 right-0 bg-black/65 backdrop-blur-md px-4 py-3 border-t border-white/5 flex flex-col justify-end">
+        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-accent leading-none">
           {event.eventType}
         </p>
-        <h3 className="mt-1 text-xs font-semibold leading-snug text-white">
+        <h3 className="mt-1 text-xs font-semibold leading-snug text-white truncate">
           {event.title}
         </h3>
-        {event.location && (
-          <p className="mt-1 flex items-center gap-1 text-xs text-white/45">
-            <MapPin className="h-3 w-3 shrink-0" />
-            {event.location}
-          </p>
-        )}
       </div>
     </button>
   );
@@ -234,7 +238,7 @@ const ClientCard: React.FC<{
 
       {/* Client name */}
       <div className="absolute bottom-0 left-0 right-0 p-4">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-accent">Client</p>
+        {/* <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-accent">Client</p> */}
         <h3 className="mt-1 text-xs font-bold uppercase tracking-[0.06em] text-white">
           {clientName}
         </h3>
@@ -417,7 +421,7 @@ const CorporateEventPage: React.FC = () => {
         {/* ── Client Grid ── */}
         {!eventsLoading && !eventsError && events.length > 0 && !selectedClient && (
           <section className="mt-10">
-            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {clientList.map((client) => (
                 <ClientCard
                   key={client}
@@ -446,7 +450,7 @@ const CorporateEventPage: React.FC = () => {
             {selectedClientEvents.length === 0 ? (
               <p className="text-sm text-white/40">Is client ke liye koi event nahi mila.</p>
             ) : (
-              <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+              <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {selectedClientEvents.map((event) => (
                   <EventCard
                     key={event.id}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useParams, useSearchParams, useNavigate } from 'react-router-dom';
+import { Link, useParams, useSearchParams, useNavigate, useLocation } from 'react-router-dom';
 import RevealSection from './RevealSection';
 import SectionHeading from './SectionHeading';
 import { getDefaultPortfolioIdForEventType } from '../../../lib/eventRoute';
@@ -98,16 +98,26 @@ const EventCard: React.FC<EventCardProps> = ({ event, resolvedPortfolioId }) => 
           style={{ gridTemplateColumns: `repeat(${Math.max(1, visibleImages.length)}, minmax(0, 1fr))` }}
         >
           {visibleImages.length > 0 ? (
-            visibleImages.map((img, idx) => (
-              <div key={`${event.id}-${idx}`} className="relative aspect-16/10 overflow-hidden bg-black/35">
-                <img
-                  src={`${IMAGE_BASE_URL}${img.url}`}
-                  alt={img.caption ?? event.title}
-                  loading="lazy"
-                  className="h-full w-full object-cover"
-                />
-              </div>
-            ))
+            visibleImages.map((img, idx) => {
+              // Dynamic aspect ratio and max height to prevent single/dual images stretching too tall
+              let aspectClass = 'aspect-16/10';
+              if (visibleImages.length === 1) {
+                aspectClass = 'aspect-[21/9] md:aspect-[3/1] max-h-[300px] sm:max-h-[350px] md:max-h-[400px]';
+              } else if (visibleImages.length === 2) {
+                aspectClass = 'aspect-[16/9] md:aspect-[21/10] max-h-[300px] sm:max-h-[350px] md:max-h-[400px]';
+              }
+
+              return (
+                <div key={`${event.id}-${idx}`} className={`relative ${aspectClass} overflow-hidden bg-black/35`}>
+                  <img
+                    src={`${IMAGE_BASE_URL}${img.url}`}
+                    alt={img.caption ?? event.title}
+                    loading="lazy"
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+              );
+            })
           ) : (
             <div className="flex h-48 w-full items-center justify-center text-xs text-white/20">No images available</div>
           )}
@@ -168,6 +178,7 @@ const EventCard: React.FC<EventCardProps> = ({ event, resolvedPortfolioId }) => 
 
 // ─── Main Section ─────────────────────────────────────────────────────────────
 const WorksSection: React.FC = () => {
+  const location = useLocation();
   const { portfolioId: portfolioIdParam } = useParams<{ portfolioId?: string }>();
   const [searchParams] = useSearchParams();
   const [events, setEvents] = React.useState<PortfolioEvent[]>([]);
@@ -177,10 +188,12 @@ const WorksSection: React.FC = () => {
   const requestedPortfolioIdFromPath = portfolioIdParam?.trim();
   const requestedPortfolioId = searchParams.get('portfolioId')?.trim();
   const parsedPortfolioId = Number(requestedPortfolioIdFromPath ?? requestedPortfolioId ?? Number.NaN);
+  
+  const isSocialRoute = location.pathname.includes('/social-profile');
   const resolvedPortfolioId =
     Number.isInteger(parsedPortfolioId) && parsedPortfolioId > 0
       ? parsedPortfolioId
-      : getDefaultPortfolioIdForEventType('corporate');
+      : getDefaultPortfolioIdForEventType(isSocialRoute ? 'social' : 'corporate');
 
   React.useEffect(() => {
     const fetchEvents = async () => {
