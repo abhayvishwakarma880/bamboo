@@ -52,11 +52,41 @@ const ACCESS_REQUEST_BASE =
   import.meta.env.VITE_BACKEND_URL?.trim() ||
   'https://winterly-reverable-romona.ngrok-free.dev/api/accessrequest';
 
+const STATIC_SERVICES: Service[] = [
+  {
+    id: 1,
+    serviceName: 'Wedding Hospitality',
+    description: 'Warm and seamless hospitality services to welcome and take care of all your guests.',
+  },
+  {
+    id: 2,
+    serviceName: 'Wedding Ceremony',
+    description: 'Beautifully orchestrated wedding ceremony matching your traditions and style.',
+  },
+  {
+    id: 3,
+    serviceName: 'Barat Assembly and Vidai',
+    description: 'Energetic barat management followed by a touching and grand vidai ceremony.',
+  },
+  {
+    id: 4,
+    serviceName: 'Sangeet Ceremony',
+    description: 'A spectacular evening of dance, music, and celebration with your family and friends.',
+  },
+  {
+    id: 5,
+    serviceName: 'Haldi and Mehandi Ceremony',
+    description: 'Vibrant and joyful haldi and mehandi celebrations filled with colors and music.',
+  },
+];
+
 const WhatWeDoSection: React.FC<WhatWeDoSectionProps> = ({ portfolioId }) => {
-  const [services, setServices] = useState<Service[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [services, setServices] = useState<Service[]>(STATIC_SERVICES);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    // API fetch is commented out as we are using static services data
+    /*
     fetch(`${ACCESS_REQUEST_BASE}/portfolio/${portfolioId}`)
       .then((res) => res.json())
       .then((json) => {
@@ -64,15 +94,24 @@ const WhatWeDoSection: React.FC<WhatWeDoSectionProps> = ({ portfolioId }) => {
       })
       .catch((err) => console.error('Failed to fetch services:', err))
       .finally(() => setLoading(false));
+    */
+    setLoading(false);
   }, [portfolioId]);
 
   const getCardClass = (index: number, total: number) => {
-    if (total % 4 !== 0) {
-      const lastRowStart = total - (total % 4);
-      const remainder = total % 4;
-      if (index === lastRowStart && remainder === 1) return 'xl:col-start-2';
+    if (total % 5 !== 0) {
+      const lastRowStart = total - (total % 5);
+      const remainder = total % 5;
+      if (index === lastRowStart && remainder === 1) return 'xl:col-start-3';
       if (index === lastRowStart && remainder === 2) return 'xl:col-start-2';
       if (index === lastRowStart + 1 && remainder === 2) return 'xl:col-start-3';
+      if (index === lastRowStart && remainder === 3) return 'xl:col-start-2';
+      if (index === lastRowStart + 1 && remainder === 3) return 'xl:col-start-3';
+      if (index === lastRowStart + 2 && remainder === 3) return 'xl:col-start-4';
+      if (index === lastRowStart && remainder === 4) return 'xl:col-start-2';
+      if (index === lastRowStart + 1 && remainder === 4) return 'xl:col-start-3';
+      if (index === lastRowStart + 2 && remainder === 4) return 'xl:col-start-4';
+      if (index === lastRowStart + 3 && remainder === 4) return 'xl:col-start-5';
     }
     return '';
   };
@@ -100,8 +139,8 @@ const WhatWeDoSection: React.FC<WhatWeDoSectionProps> = ({ portfolioId }) => {
             <SectionHeading centered title="What We Do" />
 
             {loading ? (
-              <div className="mt-12 grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-4">
-                {Array.from({ length: 4 }).map((_, i) => (
+              <div className="mt-12 grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-5">
+                {Array.from({ length: 5 }).map((_, i) => (
                   <div
                     key={i}
                     className="rounded-2xl border border-white/10 bg-[#10140c]/72 p-5 animate-pulse"
@@ -116,14 +155,14 @@ const WhatWeDoSection: React.FC<WhatWeDoSectionProps> = ({ portfolioId }) => {
             ) : services.length === 0 ? (
               <p className="mt-12 text-center text-white/50">No services available.</p>
             ) : (
-              <div className="mt-12 grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-4">
+              <div className="mt-12 grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-5">
                 {services.map((service, index) => {
                   const slug = getSlug(service.serviceName);
                   const ServiceIcon = serviceIcons[index % serviceIcons.length];
 
                   return (
                     <Link
-                      to={`/service/${slug}`}
+                      to={`/social-service/${slug}`}
                       key={service.id}
                       className={`block rounded-2xl border border-white/10 bg-[#10140c]/72 p-5 backdrop-blur-md transition duration-300 hover:-translate-y-1 hover:border-[#88ab32] hover:shadow-[0_16px_40px_rgba(136,171,50,0.18)] cursor-pointer ${getCardClass(index, services.length)}`}
                     >
@@ -134,7 +173,7 @@ const WhatWeDoSection: React.FC<WhatWeDoSectionProps> = ({ portfolioId }) => {
                       <h3 className="mt-4 normal-case text-lg tracking-normal text-[#f5f5f5]">
                         {service.serviceName}
                       </h3>
-                      <p className="mt-3 text-sm leading-relaxed text-white/65">
+                      <p className="mt-3 text-sm leading-relaxed text-justify text-white/65">
                         {service.description}
                       </p>
                     </Link>

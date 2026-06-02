@@ -93,10 +93,10 @@ const SocialProfile: React.FC = () => {
       <AboutSection />
       <WhatWeDoSection portfolioId={resolvedPortfolioId} />
       <HowWeDoSection />
-      <ServicesSection />
+      {/* <ServicesSection /> */}
       <PerformanceCategoriesSection />
       <DanceTroupeSection />
-      <ClienteleSection />
+      {/* <ClienteleSection /> */}
       <WorksSection />
 
       {/* 

@@ -26,6 +26,7 @@ import CorporateEventPage from './pages/CorporateEventPage';
 import SocialProfile from './pages/SocialProfile';
 import AllClients from './pages/corporate-profile/AllClients';
 import ServiceDetails from './pages/corporate-profile/ServiceDetails';
+import SocialServiceDetails from './pages/social-profile/SocialServiceDetails';
 import LiveBandsPage from './pages/LiveBandsPage';
 import DJArtistsPage from './pages/DJArtistsPage';
 import EMCEEProfilePage from './pages/EMCEEProfilePage';
@@ -94,6 +95,7 @@ const AppLayout: React.FC = () => {
         <Route path="/corporate-profile" element={<PageWrapper><CorporateProfile /></PageWrapper>} />
         <Route path="/corporate-profile/:portfolioId" element={<PageWrapper><CorporateProfile /></PageWrapper>} />
         <Route path="/service/:serviceSlug" element={<PageWrapper><ServiceDetails /></PageWrapper>} />
+        <Route path="/social-service/:serviceSlug" element={<PageWrapper><SocialServiceDetails /></PageWrapper>} />
         <Route path="/all-clients" element={<PageWrapper><AllClients /></PageWrapper>} />
         <Route path="/live-bands" element={<PageWrapper><LiveBandsPage /></PageWrapper>} />
         <Route path="/dj-artists" element={<PageWrapper><DJArtistsPage /></PageWrapper>} />
