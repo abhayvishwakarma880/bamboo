@@ -11,7 +11,7 @@ const navLinks = [
   // { name: 'Corporate Profile', path: '/corporate-profile' },
   { name: 'Corporate Events', path: '/events/corporate' },
   { name: 'Social Events', path: '/events/social' },
-  { name: 'Social Profile', path: '/social-profile' },
+  // { name: 'Social Profile', path: '/social-profile' },
   { name: 'Contact', path: '/contact' },
 ];
 
